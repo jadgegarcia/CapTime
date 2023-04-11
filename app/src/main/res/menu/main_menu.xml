@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@drawable/home_icon"/>
+        <item
+            android:id="@+id/nav_calendar"
+            android:title="Calendar"
+            android:icon="@drawable/calendar_icon"/>
+        <item
+            android:id="@+id/nav_timetable"
+            android:title="Timetable"
+            android:icon="@drawable/ttable_icon"/>
+        <item
+            android:id="@+id/nav_task"
+            android:title="Task"
+            android:icon="@drawable/task_icon"/>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings"
+            android:icon="@drawable/setttings_icon"/>
+    </group>
+</menu>
