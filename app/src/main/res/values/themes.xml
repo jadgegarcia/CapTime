@@ -1,18 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CapTime" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.CapTime" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">#F3B043</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorControlHighlight">#F3B043</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!--<item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">#000000</item>
+    </style>
+    <style name="CapTimeFontLauchPage" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/montserrat_extrabolditalic</item>
+        <item name="android:fontFamily">@font/montserrat_extrabolditalic</item>
+    </style>
+    <style name="TaglineFontLauchPage" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/antic_regular</item>
+        <item name="android:fontFamily">@font/antic_regular</item>
     </style>
 </resources>
