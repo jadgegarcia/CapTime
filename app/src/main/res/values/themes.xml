@@ -6,6 +6,10 @@
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorControlHighlight">#F3B043</item>
+
+        <!--Transition-->
+        <item name="android:windowContentTransitions">true</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -24,5 +28,13 @@
     <style name="TaglineFontLauchPage" parent="TextAppearance.AppCompat.Body1">
         <item name="fontFamily">@font/antic_regular</item>
         <item name="android:fontFamily">@font/antic_regular</item>
+    </style>
+    <style name="LoginFontHead" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+    <style name="LoginFontTag" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/bungee_regular</item>
+        <item name="android:fontFamily">@font/bungee_regular</item>
     </style>
 </resources>
