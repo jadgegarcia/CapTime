@@ -62,7 +62,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -77,7 +77,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -92,17 +92,19 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/btn_reg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign Up"
-            android:background="#000"
-            android:textColor="#fff"
             android:layout_marginTop="20dp"
-            android:transitionName="button_trans"/>
+            android:background="#000"
+            android:onClick="registerUser"
+            android:text="Sign Up"
+            android:textColor="#fff"
+            android:transitionName="button_trans" />
 
         <Button
             android:id="@+id/btn_already_acc"
@@ -113,7 +115,8 @@
             android:background="#00000000"
             android:layout_gravity="center"
             android:elevation="0dp"
-            android:transitionName="login_signup_trans"/>
+            android:transitionName="login_signup_trans"
+            android:fontFamily="@font/antic_regular"/>
 
     </LinearLayout>
 

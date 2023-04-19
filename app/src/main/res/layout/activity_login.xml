@@ -46,7 +46,7 @@
         android:id="@+id/tv_login_slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Input password to continue"
+        android:text="Input username and password to continue"
         android:textSize="18sp"
         android:fontFamily="@font/antic_regular"
         android:transitionName="note_trans"/>
