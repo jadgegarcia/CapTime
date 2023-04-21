@@ -16,8 +16,8 @@
         android:text="CapTime"
         android:textAlignment="center"
         android:textSize="60sp"
-        android:textColor="#F3B043"
-        android:transitionName="captime_text"/>
+        android:textColor="#F3B043"/>
+        <!--android:transitionName="captime_text"-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,8 +25,8 @@
         android:text="Seize Your Time With CapTime"
         android:textColor="#F3B043"
         android:textSize="18sp"
-        android:layout_gravity="center"
-        android:transitionName="captime_tagline"/>
+        android:layout_gravity="center"/>
+        <!--android:transitionName="captime_tagline"-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,7 +35,8 @@
         android:textSize="40sp"
         android:fontFamily="@font/bungee_regular"
         android:layout_gravity="center"
-        android:transitionName="header_trans"/>
+        android:transitionName="header_trans"
+        android:textColor="#000000"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
         android:text="SignUp to start using the app"
         android:textSize="18sp"
         android:layout_marginBottom="-10dp"
-        android:transitionName="note_trans"/>
+        android:transitionName="note_trans"
+        android:textColor="#000000"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,12 +59,18 @@
             android:layout_height="wrap_content"
             android:id="@+id/et_fullname"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Full Name">
+            android:hint="Full Name"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            android:textColorHint="#808080">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#F3B043"
+                android:outlineSpotShadowColor="#F3B043"
+                android:textCursorDrawable="@null"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -72,12 +80,18 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Username"
             app:counterMaxLength="15"
-            android:transitionName="username_trans">
+            android:transitionName="username_trans"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            android:textColorHint="#808080">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#F3B043"
+                android:outlineSpotShadowColor="#F3B043"
+                android:textCursorDrawable="@null"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -87,12 +101,19 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Password"
             app:passwordToggleEnabled="true"
-            android:transitionName="password_trans">
+            app:passwordToggleTint="#808080"
+            android:transitionName="password_trans"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            android:textColorHint="#808080">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="#F3B043"
+                android:outlineSpotShadowColor="#F3B043"
+                android:textCursorDrawable="@null"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -100,10 +121,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="#000"
+            android:backgroundTint="#F3B043"
             android:onClick="registerUser"
             android:text="Sign Up"
-            android:textColor="#fff"
+            android:textColor="#ffffff"
             android:transitionName="button_trans" />
 
         <Button
@@ -111,7 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Already have an account? LogIn"
-            android:textColor="#000"
+            android:textColor="#000000"
             android:background="#00000000"
             android:layout_gravity="center"
             android:elevation="0dp"

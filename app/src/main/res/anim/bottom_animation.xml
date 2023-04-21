@@ -3,8 +3,8 @@
     android:startOffset="1000"
     android:ordering="together">
     <translate
-        android:fromXDelta="0%"
-        android:fromYDelta="50%"
+        android:fromXDelta="-50%"
+        android:fromYDelta="0%"
         android:duration="1000"/>
     <alpha
         android:fromAlpha="0.1"

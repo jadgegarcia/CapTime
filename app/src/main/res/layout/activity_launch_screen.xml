@@ -7,34 +7,38 @@
     tools:context=".LaunchScreen"
     android:background="#F3B043">
 
-    <TextView
-        android:id="@+id/tv_captime"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:fontFamily="@font/montserrat_extrabolditalic"
-        android:text="CapTime"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="80sp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:transitionName="captime_text"/>
+        app:layout_constraintVertical_bias="0.26">
 
-    <TextView
-        android:id="@+id/tv_tagline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/antic_regular"
-        android:text="Seize Your Time With CapTime"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_captime"
-        android:transitionName="captime_tagline"/>
+        <TextView
+            android:id="@+id/tv_captime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_extrabolditalic"
+            android:text="CapTime"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:transitionName="captime_text" />
+
+        <TextView
+            android:id="@+id/tv_tagline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/antic_regular"
+            android:text="Seize Your Time With CapTime"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:transitionName="captime_tagline" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

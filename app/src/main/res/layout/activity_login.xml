@@ -41,7 +41,8 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="40dp"
         android:layout_gravity="center"
-        android:transitionName="header_trans" />
+        android:transitionName="header_trans"
+        android:textColor="#000000"/>
     <TextView
         android:id="@+id/tv_login_slogan"
         android:layout_width="wrap_content"
@@ -49,7 +50,8 @@
         android:text="Input username and password to continue"
         android:textSize="18sp"
         android:fontFamily="@font/antic_regular"
-        android:transitionName="note_trans"/>
+        android:transitionName="note_trans"
+        android:textColor="#000000"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,13 +66,20 @@
             android:id="@+id/et_username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Username"
-            android:transitionName="username_trans">
+            android:transitionName="username_trans"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            android:textColorHint="#808080">
 
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#F3B043"
+                android:textCursorDrawable="@null"
+                android:outlineSpotShadowColor="#F3B043"
+                android:hint="Username"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -79,13 +88,20 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Password"
             app:passwordToggleEnabled="true"
-            android:transitionName="password_trans">
+            app:passwordToggleTint="#808080"
+            android:transitionName="password_trans"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            android:textColorHint="#808080">
 
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="#F3B043"
+                android:outlineSpotShadowColor="#F3B043"
+                android:textCursorDrawable="@null"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:layout_width="200dp"
@@ -100,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:background="#000"
+            android:backgroundTint="#F3B043"
             android:textColor="#fff"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
