@@ -11,12 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CapTime"
         tools:targetApi="31">
-        <activity
-            android:name=".SignUp"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false" />
+
+
         <activity
             android:name=".LaunchScreen"
             android:exported="true"
@@ -27,6 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Login"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".SignUp"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".TaskActivity"
             android:exported="false" />
