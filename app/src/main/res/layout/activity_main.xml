@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -19,8 +20,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/background_layout">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -44,77 +46,133 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
                     android:text="TEST"
+                    android:textColor="@color/black"
                     android:textAlignment="center"
                     android:textSize="24sp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <!--CalendarView
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusedMonthDateColor="@color/captime_color"
-            android:theme="@style/CalenderViewCustom"
-            /-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="S"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="M"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="T"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="W"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="T"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="F"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="S"
-                android:textSize="16sp"
-                android:textAlignment="center"/>
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendarRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:mcv_showOtherDates="all"
+            app:mcv_selectionColor="@color/captime_color"
+            app:mcv_selectionMode="single"
+            app:mcv_firstDayOfWeek="sunday"/>
+
     </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/tvremind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="Reminder"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/remind"
+            app:layout_constraintEnd_toStartOf="@+id/remind"
+            app:layout_constraintTop_toTopOf="@+id/remind"
+            android:fontFamily="@font/roboto_bold"
+            android:visibility="gone"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/remind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/add"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#E8E8E8"
+            android:contentDescription="reminder"
+            android:src="@drawable/remindericon"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/event"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/fab_square"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tvevent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Event"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/event"
+            app:layout_constraintEnd_toStartOf="@+id/event"
+            app:layout_constraintTop_toTopOf="@+id/event" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/add"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#E8E8E8"
+            android:contentDescription="event"
+            android:src="@drawable/eventicon"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/timer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/fab_square"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tvtimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="Timer"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/timer"
+            app:layout_constraintEnd_toStartOf="@+id/timer"
+            app:layout_constraintTop_toTopOf="@+id/timer"
+            android:visibility="gone"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/add"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#E8E8E8"
+            android:contentDescription="timer"
+            android:src="@drawable/timericon"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/fab_square"
+            android:visibility="gone"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/captime_color"
+            android:contentDescription="Add"
+            android:src="@drawable/add"
+            android:tint="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/fab_square" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

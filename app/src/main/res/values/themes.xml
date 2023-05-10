@@ -11,8 +11,8 @@
         <item name="android:windowContentTransitions">true</item>
 
         <!-- Secondary brand color. -->
-        <!--<item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">#ffffff</item>
+        <!--item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>-->
         <!-- Status bar color. -->
         <!--<item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
@@ -22,22 +22,7 @@
         <item name="android:statusBarColor">#000000</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <style name="CapTimeFontLauchPage" parent="TextAppearance.AppCompat.Body1">
-        <item name="fontFamily">@font/montserrat_extrabolditalic</item>
-        <item name="android:fontFamily">@font/montserrat_extrabolditalic</item>
-    </style>
-    <style name="TaglineFontLauchPage" parent="TextAppearance.AppCompat.Body1">
-        <item name="fontFamily">@font/antic_regular</item>
-        <item name="android:fontFamily">@font/antic_regular</item>
-    </style>
-    <style name="LoginFontHead" parent="TextAppearance.AppCompat.Body1">
-        <item name="fontFamily">@font/roboto_bold</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-    </style>
-    <style name="LoginFontTag" parent="TextAppearance.AppCompat.Body1">
-        <item name="fontFamily">@font/bungee_regular</item>
-        <item name="android:fontFamily">@font/bungee_regular</item>
-    </style>
+
     <style name="AppTheme.Splash" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -55,9 +40,9 @@
         <item name="hintTextColor">#F3B043</item>
     </style>-->
 
-    <style name="CalenderViewCustom" parent="Theme.AppCompat.Light">
-        <item name="colorControlActivated">@color/captime_color</item>
-        <item name="android:textColorPrimaryInverse">@color/white</item>  // color of date selected.
+    <style name="fab_square" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
     </style>
 
 </resources>

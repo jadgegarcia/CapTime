@@ -1,72 +1,134 @@
 package com.example.captime;
 
-import androidx.annotation.ColorInt;
+import android.content.Intent;
+import android.graphics.Rect;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.CalendarView;
-import android.widget.TextView;
-import android.widget.Toast;
-//import android.widget.Toolbar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
+import org.threeten.bp.LocalDate;
 
-public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
     DrawerLayout drawerLayout;
+    LinearLayout background_layout;
     NavigationView navigationView;
     Toolbar toolbar;
-
-    //CalendarView calendar;
+    MaterialCalendarView calendar;
     TextView tvmonth;
-    private TextView monthYearText;
-    private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
+    FloatingActionButton freminder, fevent, ftimer, fadd;
+    TextView lblremind, lblevent, lbltimer;
+    boolean floatbool = true;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (floatbool == false) {
+
+                Rect outRect = new Rect();
+                fadd.getGlobalVisibleRect(outRect);
+
+                if(!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    ftimer.hide();
+                    fevent.hide();
+                    freminder.hide();
+                    lblremind.setVisibility(View.GONE);
+                    lblevent.setVisibility(View.GONE);
+                    lbltimer.setVisibility(View.GONE);
+                    floatbool = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        background_layout.setRenderEffect(null);
+                    }
+                }
+            }
+        }
+
+        return super.dispatchTouchEvent(event);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initWidgets();
         selectedDate = LocalDate.now();
-        setMonthView();
         drawerLayout = findViewById(R.id.drawer_layout);
+        background_layout = findViewById(R.id.background_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         tvmonth = findViewById(R.id.month);
-
+        calendar = findViewById(R.id.calendarView);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        calendarRecyclerView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this){
-            @Override
-            public void onSwipeRight() {
-                nextMonthAction();
-            }
 
+        fadd = findViewById(R.id.add);
+        ftimer = findViewById(R.id.timer);
+        fevent = findViewById(R.id.event);
+        freminder = findViewById(R.id.remind);
+        lblremind = findViewById(R.id.tvremind);
+        lblevent = findViewById(R.id.tvevent);
+        lbltimer = findViewById(R.id.tvtimer);
+
+        lblremind.setVisibility(View.GONE);
+        lblevent.setVisibility(View.GONE);
+        lbltimer.setVisibility(View.GONE);
+        fadd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSwipeLeft() {
-                previousMonthAction();
+            public void onClick(View v) {
+                if(floatbool) {
+                    ftimer.show();
+                    fevent.show();
+                    freminder.show();
+                    lblremind.setVisibility(View.VISIBLE);
+                    lblevent.setVisibility(View.VISIBLE);
+                    lbltimer.setVisibility(View.VISIBLE);
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        background_layout.setRenderEffect(RenderEffect.createBlurEffect(30, 30, Shader.TileMode.MIRROR));
+                    }
+                    floatbool = false;
+                } else {
+                    ftimer.hide();
+                    fevent.hide();
+                    freminder.hide();
+                    lblremind.setVisibility(View.GONE);
+                    lblevent.setVisibility(View.GONE);
+                    lbltimer.setVisibility(View.GONE);
+                    floatbool = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        background_layout.setRenderEffect(null);
+                    }
+                }
             }
         });
-        
+
+
+        calendar.setTopbarVisible(false);
+        calendar.setSelectedDate(selectedDate);
+        tvmonth.setText(getMonthtoString(calendar.getSelectedDate().getMonth())+ " " + calendar.getSelectedDate().getYear());
+
 
         //**********************Navigation Drawer Menu*************************
         navigationView.bringToFront();
@@ -75,61 +137,24 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
-    }
-
-
-
-    private void initWidgets() {
-        calendarRecyclerView =findViewById(R.id.calendarRecyclerView);
-        monthYearText = findViewById(R.id.month);
-    }
-
-    private void setMonthView() {
-        monthYearText.setText(monthYearFromDate(selectedDate));
-        ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
-    }
-
-    private ArrayList<String> daysInMonthArray(LocalDate date) {
-        ArrayList<String> daysInMonthArray = new ArrayList<>();
-        YearMonth yearMonth = YearMonth.from(date);
-
-        int daysInMonth = yearMonth.lengthOfMonth();
-
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-        for(int i = 1; i <= 42; i++)
-        {
-            if(i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-            {
-                daysInMonthArray.add("");
+        calendar.setOnMonthChangedListener(new OnMonthChangedListener() {
+            @Override
+            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                tvmonth.setText(getMonthtoString(date.getMonth()) +" "+ date.getYear());
             }
-            else
-            {
-                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
+        });
+        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                tvmonth.setText(getMonthtoString(date.getMonth()) +" "+ date.getYear());
             }
-        }
-        return  daysInMonthArray;
+        });
+
+
+
     }
 
-    private String monthYearFromDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
-    }
 
-    public void previousMonthAction() {
-        selectedDate = selectedDate.minusMonths(1);
-        setMonthView();
-    }
-    public void nextMonthAction() {
-        selectedDate = selectedDate.plusMonths(1);
-        setMonthView();
-    }
 
 
 
@@ -167,40 +192,32 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
     private String getMonthtoString(int m) {
         switch(m) {
-            case 0:
-                return "January";
             case 1:
-                return "February";
+                return "January";
             case 2:
-                return "March";
+                return "February";
             case 3:
-                return "April";
+                return "March";
             case 4:
-                return "May";
+                return "April";
             case 5:
-                return "June";
+                return "May";
             case 6:
-                return "July";
+                return "June";
             case 7:
-                return "August";
+                return "July";
             case 8:
-                return "September";
+                return "August";
             case 9:
-                return "October";
+                return "September";
             case 10:
-                return "November";
+                return "October";
             case 11:
+                return "November";
+            case 12:
                 return "December";
         }
         return null;
     }
 
-    @Override
-    public void onItemClick(int position, String dayText) {
-        if(!dayText.equals(""))
-        {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        }
-    }
 }
