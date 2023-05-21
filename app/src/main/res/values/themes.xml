@@ -44,5 +44,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20%</item>
     </style>
+        <!--hint appearance-->
+    <style name="CustomHintTextAppearance" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">8sp</item>  <!-- Customize the text size as needed -->
+        <!-- Add other attributes to further customize the hint appearance -->
+    </style>
 
 </resources>

@@ -64,13 +64,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_username"
+            android:id="@+id/et_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Username"
+            android:hint="Email Address"
             android:transitionName="username_trans"
             app:boxStrokeColor="#000000"
             app:hintTextColor="#000000"
-            android:textColorHint="#808080">
+            android:textColorHint="#808080"
+            >
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -80,7 +81,7 @@
                 android:textColor="#F3B043"
                 android:textCursorDrawable="@null"
                 android:outlineSpotShadowColor="#F3B043"
-                android:hint="Username"/>
+                />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

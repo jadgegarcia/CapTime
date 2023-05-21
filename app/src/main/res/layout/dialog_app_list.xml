@@ -1,0 +1,52 @@
+<!-- dialog_app_list.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<TextView
+    android:id="@+id/dialog_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Select an app"
+    android:fontFamily="@font/roboto_bold"
+    android:textAppearance="?android:textAppearanceLarge"
+    android:background="@color/captime_color"
+    android:textColor="@color/white"
+    android:textSize="32sp"/>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/app_list"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1" />
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="@color/gray"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="right">
+
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:textSize="12sp"/>
+
+    <Button
+        style="@style/Widget.Material3.Button.TextButton"
+        android:id="@+id/btn_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:textSize="12sp"/>
+</LinearLayout>
+
+</LinearLayout>

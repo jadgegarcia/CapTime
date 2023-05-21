@@ -9,12 +9,8 @@
             android:title="Home"
             android:icon="@drawable/home_icon"/>
         <item
-            android:id="@+id/nav_calendar"
-            android:title="Calendar"
-            android:icon="@drawable/calendar_icon"/>
-        <item
             android:id="@+id/nav_timetable"
-            android:title="Timetable"
+            android:title="Reminder"
             android:icon="@drawable/ttable_icon"/>
         <item
             android:id="@+id/nav_task"

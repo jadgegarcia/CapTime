@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="dialog_top_space_height">16dp</dimen> <!-- Adjust the height as needed -->
+</resources>

@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Reminder"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
@@ -16,23 +16,7 @@
         android:id="@+id/nav_view"
         app:headerLayout="@layout/header"
         app:menu="@menu/main_menu"
-        android:layout_gravity="start">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:id="@+id/logout_btn"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="#f0f0f0"
-                android:src="@drawable/logout_icon" />
-        </RelativeLayout>
-    </com.google.android.material.navigation.NavigationView>
+        android:layout_gravity="start"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,28 +45,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="MONTH"
+                    android:text="Reminder"
                     android:textColor="@color/black"
                     android:textAlignment="center"
                     android:textSize="24sp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
-
-
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mcv_selectionColor="@color/captime_color"
-            app:mcv_selectionMode="single"
-            app:mcv_firstDayOfWeek="sunday"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/eventRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
 
     </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -197,3 +165,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+

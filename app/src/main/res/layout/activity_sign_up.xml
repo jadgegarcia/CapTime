@@ -55,6 +55,26 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp">
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_mail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Email Address"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            android:textColorHint="#808080">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#F3B043"
+                android:outlineSpotShadowColor="#F3B043"
+                android:textCursorDrawable="@null"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -123,7 +143,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="#F3B043"
-            android:onClick="registerUser"
             android:text="Sign Up"
             android:textColor="#ffffff"
             android:transitionName="button_trans" />

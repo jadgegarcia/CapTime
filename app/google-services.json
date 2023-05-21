@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "640799746059",
+    "firebase_url": "https://captime-8f872-default-rtdb.firebaseio.com",
+    "project_id": "captime-8f872",
+    "storage_bucket": "captime-8f872.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640799746059:android:f1e6e4d5b5f63e3c86bf0e",
+        "android_client_info": {
+          "package_name": "com.example.captime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640799746059-a1rbae408a1sqamcca0kplkgk6816ldm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC_4T3bILrzESHySVcrKG7MrTtMgMYeUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640799746059-a1rbae408a1sqamcca0kplkgk6816ldm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
