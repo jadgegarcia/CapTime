@@ -2,15 +2,18 @@ package com.example.captime;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.captime.helperclass.EventHelperClass;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
@@ -40,6 +43,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         EventHelperClass event =  eventArrayList.get(position);
         holder.title.setText(event.getTitle());
         holder.note.setText(event.getNote());
+
+        int color = Color.parseColor(event.getColor());
+        holder.cardView.setCardBackgroundColor(color);
     }
 
     @Override
@@ -50,10 +56,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public static class EventViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, note;
+        MaterialCardView cardView;
+
 
         public EventViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            cardView = itemView.findViewById(R.id.event_CardView);
             title = itemView.findViewById(R.id.event_title);
             note = itemView.findViewById(R.id.event_note);
         }
