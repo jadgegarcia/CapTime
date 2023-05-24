@@ -10,7 +10,7 @@
             android:icon="@drawable/home_icon"/>
         <item
             android:id="@+id/nav_timetable"
-            android:title="Reminder"
+            android:title="Music"
             android:icon="@drawable/ttable_icon"/>
         <item
             android:id="@+id/nav_task"
