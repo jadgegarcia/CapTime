@@ -47,6 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.captime.helperclass.DateHelperClass;
 import com.example.captime.helperclass.EventHelperClass;
+
 import com.example.captime.helperclass.TimeHelperClass;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
@@ -67,7 +68,6 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     EditText addTitle, addDate, addTime, addColor, chooseApp;
     ImageView colorpickericon;
     private int iconColor;
-    AutoCompleteTextView autoCompleteTextView;
+    AutoCompleteTextView autoCompleteTextView, main_sort_event;
     String[] item = {"30 minutes", "1 hour", "2 hours", "4 hours", "8 hours", "1 day"};
     ArrayAdapter<String> adapterItem;
     TextInputLayout txtinptlyt;
@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
         //EventChangeListener();
+        updateListBaseDate(calendar.getCurrentDate(), 2);
     }
 
     @Override
@@ -182,6 +183,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         progressDialog.setMessage("Fetching Data....");
         progressDialog.show();
 
+
+        main_sort_event = findViewById(R.id.event_menu);
         selectedDate = LocalDate.now();
         currentTime = LocalTime.now(ZoneId.of("Asia/Manila"));
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -237,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         lblevent.setVisibility(View.GONE);
         lbltimer.setVisibility(View.GONE);
 
+
         fadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,6 +282,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendar.setSelectedDate(selectedDate);
         tvmonth.setText(getMonthtoString(calendar.getSelectedDate().getMonth())+ " " + calendar.getSelectedDate().getYear());
 
+
+
         //**********************Navigation Drawer Menu*************************
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -285,33 +291,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
+
+
+        main_sort_event.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedSort = parent.getItemAtPosition(position).toString();
+
+                // Perform your desired action based on the selected sort
+                if (selectedSort.equals("Month")) {
+                    // Edit something for option 1
+                    updateListBaseDate(calendar.getCurrentDate(), 2);
+                } else if (selectedSort.equals("Year")) {
+                    updateListBaseDate(calendar.getCurrentDate(), 3);
+
+                }
+                calendar.setSelectedDate(LocalDate.now());
+            }
+        });
+
         calendar.setOnMonthChangedListener(new OnMonthChangedListener() {
+
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
                 tvmonth.setText(getMonthtoString(date.getMonth()) +" "+ date.getYear());
+                updateListBaseDate(date, 2);
+
             }
         });
         calendar.setOnDateChangedListener(new OnDateSelectedListener() {
+
+
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 tvmonth.setText(getMonthtoString(date.getMonth()) +" "+ date.getYear());
+                eventAdapter.clear();
+                main_sort_event.getText().clear();
+                main_sort_event.setHint("Sort by");
+                updateListBaseDate(date, 1);
             }
+
         });
 
         eventRecycler = findViewById(R.id.eventRecyclerView);
-        eventRecycler.setHasFixedSize(true);
-        eventRecycler.setLayoutManager(new LinearLayoutManager(this));
-        eventArrayList = new ArrayList<EventHelperClass>();
-        eventAdapter = new EventAdapter(MainActivity.this, eventArrayList);
-        eventRecycler.setAdapter(eventAdapter);
-        EventChangeListener();
-        int n = 0;
-        for(EventHelperClass e: eventArrayList) {
-            n++;
-            Log.d("Event", e.toString());
-        }
 
-        //dbhandler = new SQLiteDBHelper(this, "CalendarDatabase", null, 1);
+        EventChangeListener();
+
 
         //************  ADD EVENT   ***************
         View view = getLayoutInflater().inflate(R.layout.add_event, null);
@@ -388,6 +413,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if(timehelper.getMinute() == 0) {
                             addTime.setText(timehelper.getHour()+ ":00");
                         } else {
+                            String hr_temp = String.format("%d", timehelper.getHour());
+                            String min_temp = String.format("%d", timehelper.getMinute());
+                            if(timehelper.getHour() < 10) {
+                                hr_temp = String.format("0%d", timehelper.getMinute());
+                            }
+                            if(timehelper.getMinute() < 10) {
+                                min_temp = String.format("0%d", timehelper.getMinute());
+                            }
                             addTime.setText(timehelper.getHour()+ ":" + timehelper.getMinute());
                         }
                         //**********Tester************
@@ -446,11 +479,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         datehelper.getYear(), timehelper.getHour(), timehelper.getMinute(), addColor.getText().toString(), noteEvent.getText().toString());
                 storeEventToDB(event);
 
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                closeEventDialog();
+//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
             }
         });
+
+
         // ******* on click of add fabs ********
         fevent.setOnClickListener(this);
         ftimer.setOnClickListener(this);
@@ -544,6 +580,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Window window;
         switch (v.getId()) {
             case R.id.timer:
+                clearDialogevent();
                 window = dialogaddtimer.getWindow();
                 if (window != null) {
                     WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -572,6 +609,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.remind:
                 break;
 
+
         }
     }
 
@@ -586,6 +624,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RecyclerView recyclerView = dialog.findViewById(R.id.app_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+
+
 
         //AlertDialog dialogbtn = buildAppListDialog();
         AppListAdapter adapter = new AppListAdapter(installedApps, chooseApp);
@@ -672,6 +713,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
     }
+    public void clearDialogevent() {
+        addDate.getText().clear();
+        addTitle.getText().clear();
+        addTime.getText().clear();
+        addColor.getText().clear();
+        noteEvent.getText().clear();
+        colorpickericon.setColorFilter(R.color.captime_color);
+    }
 
     private void closeEventDialog() {
         addDate.getText().clear();
@@ -697,30 +746,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Log.e("Firestore error", error.getMessage());
                             return;
                         }
-                        eventArrayList.clear();
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            //EventHelperClass newEvent = dc.getDocument().toObject(EventHelperClass.class);
-                            switch (dc.getType()) {
-                                case ADDED:
-                                    if(progressDialog.isShowing()) {
-                                        progressDialog.dismiss();
-                                    }
+                        //eventArrayList.clear();
+                        eventArrayList = new ArrayList<>();
+                        eventArrayList.addAll(value.toObjects(EventHelperClass.class));
 
-                                    eventArrayList.add(dc.getDocument().toObject(EventHelperClass.class));
-                                    eventAdapter.notifyDataSetChanged();
-                                    if(progressDialog.isShowing()) {
-                                        progressDialog.dismiss();
-                                    }
-                                    break;
+                        eventRecycler.setHasFixedSize(true);
+                        eventRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-                                case MODIFIED:
-                                    break;
-
-                                case REMOVED:
-                                    break;
-
-                            }
-                        }
+                        eventAdapter = new EventAdapter(MainActivity.this, eventArrayList, getSupportFragmentManager());
+                        eventRecycler.setAdapter(eventAdapter);
 
                         if(progressDialog.isShowing()) {
                             progressDialog.dismiss();
@@ -750,4 +784,132 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
     }
+
+
+    private void updateListBaseDate(CalendarDay date, int n) {
+
+        if(n == 1) {
+            db.collection("events").whereEqualTo("email", user.getEmail()).whereEqualTo("year", date.getYear()).whereEqualTo("month", date.getMonth()).whereEqualTo("day", date.getDay())
+                    .orderBy("day", Query.Direction.ASCENDING)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(error != null) {
+                                if(progressDialog.isShowing()) {
+                                    progressDialog.dismiss();
+                                }
+
+                                Log.e("Firestore error", error.getMessage());
+                                return;
+                            }
+                            if(value.isEmpty()) {
+                                eventAdapter.clear();
+                            }
+                            //eventArrayList.clear();
+                            eventArrayList = new ArrayList<>();
+                            eventArrayList.addAll(value.toObjects(EventHelperClass.class));
+
+                            eventRecycler.setHasFixedSize(true);
+                            eventRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+                            eventAdapter = new EventAdapter(MainActivity.this, eventArrayList, getSupportFragmentManager());
+                            eventRecycler.setAdapter(eventAdapter);
+
+                            if(progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+        } else if(n == 2) {
+            db.collection("events").whereEqualTo("email", user.getEmail()).whereEqualTo("year", date.getYear()).whereEqualTo("month", date.getMonth())
+                    .orderBy("month", Query.Direction.ASCENDING).orderBy("day", Query.Direction.ASCENDING)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(error != null) {
+                                if(progressDialog.isShowing()) {
+                                    progressDialog.dismiss();
+                                }
+
+                                Log.e("Firestore error", error.getMessage());
+                                return;
+                            }
+                            //eventArrayList.clear();
+                            eventArrayList = new ArrayList<>();
+                            eventArrayList.addAll(value.toObjects(EventHelperClass.class));
+
+                            eventRecycler.setHasFixedSize(true);
+                            eventRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+                            eventAdapter = new EventAdapter(MainActivity.this, eventArrayList, getSupportFragmentManager());
+                            eventRecycler.setAdapter(eventAdapter);
+
+                            if(progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+        } else if(n == 3) {
+            db.collection("events").whereEqualTo("email", user.getEmail()).whereEqualTo("year", date.getYear()).orderBy("year", Query.Direction.ASCENDING)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(error != null) {
+                                if(progressDialog.isShowing()) {
+                                    progressDialog.dismiss();
+                                }
+
+                                Log.e("Firestore error", error.getMessage());
+                                return;
+                            }
+                            //eventArrayList.clear();
+                            eventArrayList = new ArrayList<>();
+                            eventArrayList.addAll(value.toObjects(EventHelperClass.class));
+
+                            eventRecycler.setHasFixedSize(true);
+                            eventRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+                            eventAdapter = new EventAdapter(MainActivity.this, eventArrayList, getSupportFragmentManager());
+                            eventRecycler.setAdapter(eventAdapter);
+
+                            if(progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+        } else {
+            db.collection("events").whereEqualTo("email", user.getEmail()).orderBy("year", Query.Direction.ASCENDING)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(error != null) {
+                                if(progressDialog.isShowing()) {
+                                    progressDialog.dismiss();
+                                }
+
+                                Log.e("Firestore error", error.getMessage());
+                                return;
+                            }
+                            //eventArrayList.clear();
+                            eventArrayList = new ArrayList<>();
+                            eventArrayList.addAll(value.toObjects(EventHelperClass.class));
+
+                            eventRecycler.setHasFixedSize(true);
+                            eventRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+                            eventAdapter = new EventAdapter(MainActivity.this, eventArrayList, getSupportFragmentManager());
+                            eventRecycler.setAdapter(eventAdapter);
+
+                            if(progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    });
+        }
+
+
+    }
+
+
 }
+
