@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
                 tvmonth.setText(getMonthtoString(date.getMonth()) +" "+ date.getYear());
+                eventAdapter.clear();
                 updateListBaseDate(date, 2);
 
             }
@@ -332,7 +333,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         });
-
         eventRecycler = findViewById(R.id.eventRecyclerView);
 
         EventChangeListener();
