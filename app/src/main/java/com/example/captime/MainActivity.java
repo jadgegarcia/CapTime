@@ -1,5 +1,6 @@
 package com.example.captime;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -20,6 +21,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView eventRecycler;
     ArrayList<EventHelperClass> eventArrayList;
     EventAdapter eventAdapter;
+
     ProgressDialog progressDialog;
     DateHelperClass datehelper;
     TimeHelperClass timehelper;
@@ -115,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LocalDate selectedDate;
     private LocalTime currentTime;
     FloatingActionButton freminder, fevent, ftimer, fadd;
+    private Animation open, close;
     TextView lblremind, lblevent, lbltimer;
     boolean floatbool = true;
     Dialog dialogaddevent, dialogaddtimer;
@@ -203,6 +208,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("Username", "Username: " + navdraw_uname.getText());
         //********************************************
 
+        //****************** fabs add animation ********************
+        open = AnimationUtils.loadAnimation(this, R.anim.open_add);
+        close = AnimationUtils.loadAnimation(this, R.anim.close_add);
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,6 +247,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     lblremind.setVisibility(View.VISIBLE);
                     lblevent.setVisibility(View.VISIBLE);
                     lbltimer.setVisibility(View.VISIBLE);
+                    // Apply rotation animation for opening
+                    ObjectAnimator rotateOpen = ObjectAnimator.ofFloat(fadd, "rotation", 0f, 45f);
+                    rotateOpen.setDuration(300);
+                    rotateOpen.start();
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         background_layout.setRenderEffect(RenderEffect.createBlurEffect(30, 30, Shader.TileMode.MIRROR));
                     }
@@ -249,6 +263,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     lblevent.setVisibility(View.GONE);
                     lbltimer.setVisibility(View.GONE);
                     floatbool = true;
+                    ObjectAnimator rotateClose = ObjectAnimator.ofFloat(fadd, "rotation", 45f, 0f);
+                    rotateClose.setDuration(300);
+                    rotateClose.start();
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         background_layout.setRenderEffect(null);
                     }
@@ -681,56 +699,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                         eventArrayList.clear();
                         for (DocumentChange dc : value.getDocumentChanges()) {
-                            EventHelperClass newEvent = dc.getDocument().toObject(EventHelperClass.class);
+                            //EventHelperClass newEvent = dc.getDocument().toObject(EventHelperClass.class);
                             switch (dc.getType()) {
                                 case ADDED:
-
-
-                                    // Check if the event already exists in the list
-                                    boolean isExisting = false;
-                                    int existingIndex = -1;
-                                    for (int i = 0; i < eventArrayList.size(); i++) {
-                                        EventHelperClass event = eventArrayList.get(i);
-                                        if (event.compareEvent(newEvent)) {
-                                            isExisting = true;
-                                            existingIndex = i;
-                                            break;
-                                        }
+                                    if(progressDialog.isShowing()) {
+                                        progressDialog.dismiss();
                                     }
 
-                                    if (!isExisting) {
-                                        eventArrayList.add(newEvent);
-                                        eventAdapter.notifyItemInserted(eventArrayList.size() - 1);
+                                    eventArrayList.add(dc.getDocument().toObject(EventHelperClass.class));
+                                    eventAdapter.notifyDataSetChanged();
+                                    if(progressDialog.isShowing()) {
+                                        progressDialog.dismiss();
                                     }
                                     break;
 
                                 case MODIFIED:
-                                    EventHelperClass updatedEvent = dc.getDocument().toObject(EventHelperClass.class);
-
-                                    // Update the event in the list
-                                    for (int i = 0; i < eventArrayList.size(); i++) {
-                                        EventHelperClass event = eventArrayList.get(i);
-                                        if (event.compareEvent(updatedEvent)) { // Use updatedEvent here
-                                            eventArrayList.set(i, updatedEvent);
-                                            eventAdapter.notifyItemChanged(i);
-                                            break;
-                                        }
-                                    }
                                     break;
 
                                 case REMOVED:
-                                    EventHelperClass removedEvent = dc.getDocument().toObject(EventHelperClass.class);
-
-                                    // Remove the event from the list
-                                    for (int i = 0; i < eventArrayList.size(); i++) {
-                                        EventHelperClass event = eventArrayList.get(i);
-                                        if (event.compareEvent(removedEvent)) { // Use removedEvent here
-                                            eventArrayList.remove(i);
-                                            eventAdapter.notifyItemRemoved(i);
-                                            break;
-                                        }
-                                    }
                                     break;
+
                             }
                         }
 

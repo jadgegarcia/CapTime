@@ -193,7 +193,7 @@
             android:tint="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:shapeAppearanceOverlay="@style/fab_square" />
+            app:borderWidth="0dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
